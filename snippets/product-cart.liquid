@@ -1,0 +1,14 @@
+
+<div class="col md-4">
+    {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+    
+    <div class="card">
+  <img style="height:400px" src="{{ product.featured_image |  image_url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{  product.title |  link_to: product.title }}</h5>
+    <button type="submit" class="btn btn-primary">Details</button>
+  </div>
+</div>
+{% endform %}
+</div>

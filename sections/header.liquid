@@ -1,0 +1,124 @@
+{% liquid
+  assign menu = section.settings.menu
+%}
+
+
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      {% if section.settings.logo != blank %}
+        <a href="{{ shop.url }}">
+          <img src="{{ section.settings.logo |  image_url  }}" alt="">
+        </a>
+      {% else %}
+        <a class="navbar-brand" href="{{ shop.url }}">{{ shop.name }}</a>
+      {% endif %}
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% for main_menu in menu.links %}
+            <li class="nav-item {%  if main_menu.links.size > 0 %} dropdown {% endif %} ">
+              <a
+                class="nav-link active {% if main_menu.links.size > 0 %} dropdown-toggle {% endif %}"
+                aria-current="page"
+                href="{{ main_menu.url }}"
+                {% if main_menu.links.size > 0 %}
+                id="navbarDropdown_{{ forloop.index }}"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                {% endif %}>{{ main_menu.title }}</a>
+              {% if main_menu.links.size > 0 %}
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for subMenu in main_menu.links %}
+                    <li>
+                      <a class="dropdown-item" href="{{ subMenu.url }}">{{ subMenu.title }}</a>
+                    </li>
+                  {% endfor %}
+
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% form "localization" %}
+          <select name="" id="">
+            {% for country in localization.available_languages %}
+              <option
+                value="{{ country.iso_code }}"
+                {% if country.iso_code == localization.language.iso_code %}
+                selected
+                {% endif %}>{{ country.endonym_name }}</option>
+
+            {% endfor %}
+          </select>
+        {% endform %}
+        {% if section.settings.enable_search_box %}
+          <form class="d-flex" action="{{ routes.search_url }}">
+            <input
+              name="q"
+              class="form-control me-2"
+              type="search"
+              value="{{ search.terms | escape }}"
+              placeholder="Search"
+              aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        {% endif %}
+        <a
+          href=" {% if settings.cart_type =='page' %} {{ routes.cart_url }} {%  else %} #offcanvasRight {% endif %}"
+          class="cart__wrap mx-2"
+          {% if settings.cart_type == "drawer" %}
+          data-bs-toggle="offcanvas"
+          aria-controls="offcanvasRight"
+          {% endif %}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-bag"
+            viewBox="0 0 16 16">
+            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
+          </svg>
+          <span class="cart__cunter">{{ cart.item_count }}</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Recommended Size: 250pxX 250px"
+      }, {
+        "type": "link_list",
+        "label": "Select Menu",
+        "id": "menu"
+      }, {
+        "type": "checkbox",
+        "id": "enable_search_box",
+        "label": "Enable Search Box",
+        "default": true
+      }
+
+    ]
+  }
+{% endschema %}

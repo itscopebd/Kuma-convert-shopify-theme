@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row">
+    {% for block in section.blocks %}
+        <div class="col-md-4">
+            <div class="card">
+                {% if block.settings.image != blank %}
+                    
+                    <img src="{{  block.settings.image |  image_url  }}" class="card-img-top" alt="..."> 
+               
+                {%  else %} 
+                {{ "collection-apparel-1" |  placeholder_svg_tag:"placeholder-svg" }}
+            {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ block.settings.title }}</h5>
+                {{ block.settings.des }}
+                <a href="{{ block.settings.btn_url }}" class="btn btn-primary"> {{ block.settings.btn_text }} </a>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+   
+   
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "MultiColumn",
+    "settings": [],
+    "blocks": [
+        {
+            "type":"column",
+            "name": "Column",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "text",
+                    "id":"title",
+                    "label": "Heading"
+                },
+                {
+                    "type": "richtext",
+                    "id": "des",
+                    "label": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button Url"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "MultiColumn",
+        "blocks":[
+        {
+            "type": "column"
+        },
+        {
+            "type": "column"
+        },
+        {
+            "type": "column"
+        }
+      ]
+      }
+      
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "title_Wj7GP3": {
+          "type": "title",
+          "settings": {}
+        },
+        "price_JAJrWk": {
+          "type": "Price",
+          "settings": {}
+        },
+        "quantity_BQWXrQ": {
+          "type": "quantity",
+          "settings": {}
+        },
+        "variants_LCJjPy": {
+          "type": "variants",
+          "settings": {
+            "variant_select": "pills"
+          }
+        },
+        "add_card_button_9UdVKU": {
+          "type": "add_card_button",
+          "settings": {
+            "enable_buy_button": true
+          }
+        }
+      },
+      "block_order": [
+        "title_Wj7GP3",
+        "price_JAJrWk",
+        "quantity_BQWXrQ",
+        "variants_LCJjPy",
+        "add_card_button_9UdVKU"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-product"
+  ]
+}

@@ -1,0 +1,170 @@
+
+
+
+{{ 'product.css' | asset_url |  stylesheet_tag }}
+
+<div class="main_product">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ product.featured_image |  image_url  }}">
+        </div>
+        <div class="col-md-6 main__product">
+            {% form 'product', product %}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <div class="product__information">
+                    {% for block in section.blocks %}
+                        {% assign b = block.settings %}
+                        {% case block.type %}
+                            {% when '@app' %}
+                                {% render block %}
+
+                                {%  when 'title' %}
+
+                                    <div class="product__title">
+                                        {{ product.title |  escape }}
+                                    </div>
+                                    {% comment %} {% assign fiveDay = 5 |  times: 86400 %}
+                                    {{ "now" | date:"%d %m"}}.{{ "now" |  date:"%s" |  plus: fiveDay |  date:"%d %m"}} {% endcomment %}
+
+                                    {{ product.created_at | date:"%d-%m-%y : %H: %M %a" }}
+
+                                {%  when 'description' %}
+
+                                    <div class="product__des">
+                                        {{ product.description |  truncatewords: 10}}
+                                    </div>
+                                {%  when 'Price' %} 
+
+                                    <div class="product__price">
+                                        {{ product.price | money }}
+                                    </div>
+
+                                {%  when 'sku' %} 
+                                    <div class="product__sku">
+                                        {{ product.sku }}
+                                    </div>
+                                {%  when 'quantity' %}  
+                                    <input class="form-control" type="number" value="1" name="quantity" min="1" class="from-control">
+                                {%  when 'variants' %}  
+                                  
+                                    {% render 'product-variants', product: product, variant_type: b.variant_select  %}
+
+                                {%  when 'add_card_button' %} 
+                                    <button class="btn btn-primary w-100 my-2">Add To Cart</button>
+                                    {% if b.enable_buy_button %}
+                                        {{  form |  payment_button }}
+                                    {% endif %}
+
+                                {%  when 'txt' %} 
+                                    <p>{{ b.vandor }}</p>
+                            {% else %}
+                                
+                        {% endcase %}
+
+                    {% endfor %}
+                    
+    
+                </div>
+            {% endform %}
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+{% schema %}
+{
+    "name": "Product",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "title",
+            "name":"Title",
+            "limit": 1,
+            "settings": []
+        },
+        {
+            "type": "Price",
+            "name":"Price",
+            "limit": 1,
+            "settings": []
+        },
+        {
+            "type": "sku",
+            "name":"SKU",
+            "limit": 1,
+            "settings": []
+        },
+        {
+            "type": "quantity",
+            "name":"Quantity",
+            "limit": 1,
+            "settings": []
+        },
+        {
+            "type": "description",
+            "name":"Description",
+            "limit": 1,
+            "settings": []
+        },
+        
+        {
+            "type": "variants",
+            "name":"Variants",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "variant_select",
+                    "label": "Variant type",
+                    "options": [
+                        {
+                            "label": "Pills",
+                            "value": "pills"
+                        },
+
+                        {
+                            "label": "Select",
+                            "value": "selector"
+                        }
+                    ],
+                    "default":"pills"
+                }
+            ]
+        },
+        
+        {
+            "type": "add_card_button",
+            "name":"Add To Card",
+            "limit": 1,
+            "settings": [
+                {
+                    "type":"checkbox",
+                    "id": "enable_buy_button",
+                    "label": "Enable Buy Now Button"
+                }
+            ]
+        },
+        {
+            "type": "@app"
+        },
+        {
+            "type": "txt",
+            "name":"Text",
+            "limit": 1,
+            "settings": [
+
+            {
+                "type": "text",
+                "id": "vandor",
+                "label": "Text",
+                "default":"{{ product.vendor }}"
+            }
+            ]
+        }
+    ]
+}
+{% endschema %}

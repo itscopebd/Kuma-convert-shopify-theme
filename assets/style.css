@@ -1,0 +1,16 @@
+
+nav.navbar img {
+    width: 85px;
+}
+
+
+.card svg {
+    width: 100%;
+    padding: 9px;
+    border-radius: 35px;
+}
+.cart_image{
+    width: 100px;
+height: 100px;
+
+}

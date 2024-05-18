@@ -1,0 +1,22 @@
+.main_product img {
+    width: 100%;
+}
+
+.variant__pill input[type='radio']{
+    display: none;
+}
+.variant__button{
+    padding: 5px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    background-color: gray;
+    color: #fff;
+    cursor: pointer;
+
+}
+
+.variant__pill input[type='radio']:checked + .variant__button{
+   background-color: #000;
+   
+}
+

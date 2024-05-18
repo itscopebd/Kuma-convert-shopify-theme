@@ -1,0 +1,40 @@
+
+{% unless product.has_only_default_variant %}
+    <div class="product_variants">
+
+    {% for option in product.options_with_values %}
+        <strong>{{ option.name }}: </strong> <br>
+    {% if variant_type == 'pills' %}
+        {% for value in option.values %}
+    
+            <label class="variant__pill">
+                <input type="radio" value="{{ value.name }}" name="{{ option.name |  downcase |  replace: ' ', '_'  }}" {% if option.selected_value == value %} checked {% endif %}>
+                <span class="variant__button">{{ value.name }}</span>
+            </label>
+            
+        {% endfor %}
+        {% else %}
+            
+        <select class="form-control">
+            {%  for value in option.values %} 
+                <option value="{{ value.name }}" {% if option.selected_value == value %} selected {% endif %}> {{ value.name }} </option>
+            {% endfor %} 
+        </select>
+    
+    {% endif %}
+     
+        <br>
+    
+    {% endfor %}
+    
+    
+    <select name="id" id="" class="select__variants">
+    {% for varinat in product.variants %}
+        <option value="{{ varinat.id }}" data-img="{{ varinat.image | image_url }}" > {{ varinat.title }}</option>
+    {% endfor %}
+    
+    
+    </select>
+    
+    </div> 
+{% endunless %}

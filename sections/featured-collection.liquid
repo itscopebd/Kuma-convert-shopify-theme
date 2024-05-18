@@ -1,0 +1,82 @@
+{% liquid
+  assign featured_product = section.settings.featured_product
+ assign all = all_products['total-exposure-table'] 
+%}
+
+<div class="container">
+  <div class="row">
+    {% for product in featured_product.products %}
+
+      <div class="col-md-3">
+ {% form 'product'
+                    , product %}
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="{{ product.selected_or_first_available_variant.id }}">
+                    <div class="card">
+                      <a href="{{ product.url }}"><img
+                      src="{{  product.featured_image |  img_url: 'medium'}}"
+                      class="card-img-top"
+                      alt="..."></a>
+                      <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text">{{ product.price | money }}</p>
+                        <div class="d-flex d-flex justify-content-between">
+               
+                          <div class="d-flex">
+                            <label>
+                              Color
+                              <select class="form-select">
+                                {%- for value in product.options_by_name['Color'].values %}
+                                  <option>{{ value }}</option>
+                                {%- endfor %}
+                              </select>
+                            </label>
+                            <label>
+                              Size
+                              <select class="form-select">
+                                {%- for value in product.options_by_name['Size'].values %}
+                                  <option>{{ value }}</option>
+                                {%- endfor %}
+                              </select>
+                            </label>
+                          </div>
+
+
+                        </div>
+                        <button type="submit" class="btn btn-primary my-3">Add To Cart</button>
+                      </div>
+                    </div>
+                {% endform %}
+      </div>
+
+
+
+    {% endfor %}
+
+    {{ all_products['total-exposure-table'].title }}
+
+    <select name="" id="">
+      {{country_option_tags}}
+    </select>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Featured Product",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "featured_product",
+        "label": "Featured Product"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Product"
+      }
+    ]
+  }
+{% endschema %}

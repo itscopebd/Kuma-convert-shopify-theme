@@ -1,0 +1,230 @@
+<section class="space min pt-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <ul
+          class="nav nav-tabs b-0 d-flex align-items-center justify-content-center simple_tab_links mb-4"
+          id="myTab"
+          role="tablist"
+        >
+          {% for block in section.blocks %}
+            {% assign b = block.settings %}
+            {% if b.title != blank %}
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link {% if forloop.index == 2 %} active {%- endif -%}"
+                  id="all-tab_{{ forloop.index }}"
+                  href="#all_{{ forloop.index }}"
+                  data-toggle="tab"
+                  role="tab"
+                  aria-controls="all_{{ forloop.index }}"
+                  aria-selected="true"
+                >
+                  {{- b.title | escape -}}
+                </a>
+              </li>
+            {% else %}
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link {% if forloop.index == 2 %} active {%- endif -%}"
+                  id="all-tab_{{ forloop.index }}"
+                  href="#all_{{ forloop.index }}"
+                  data-toggle="tab"
+                  role="tab"
+                  aria-controls="all_{{ forloop.index }}"
+                  aria-selected="true"
+                >
+                  {{- b.collection.title | escape -}}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+          <!-- All Content -->
+          {% for block in section.blocks %}
+            {% assign b = block.settings %}
+            <div
+              class="tab-pane {% if forloop.index == 2  %} show active {%- endif -%}"
+              id="all_{{ forloop.index }}"
+              role="tabpanel"
+              aria-labelledby="all-tab"
+              {{ block.shopify_attributes }}
+            >
+              <div class="tab_product">
+                <div class="row rows-products">
+                  <!-- Single -->
+                  {% for product in b.collection.products %}
+                    {% if b.collection != blank %}
+                      <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <div class="product_grid card b-0">
+                          <div class="badge bg-info text-white position-absolute ft-regular ab-left text-upper">
+                            Sale
+                          </div>
+                          <div class="card-body p-0">
+                            <div class="shop_thumb position-relative">
+                              <a class="card-img-top d-block overflow-hidden" href="{{ product.url }}"
+                                ><img class="card-img-top" src="{{ product.featured_image | image_url }}" alt="..."
+                              ></a>
+                              <div class="product-left-hover-overlay">
+                                <ul class="left-over-buttons">
+                                  <li>
+
+                                    <a
+                                      href="#" data-toggle="modal" data-target="#quickview"
+                                      class="d-inline-flex circle align-items-center justify-content-center"
+                                      ><i class="fa fa-arrows-alt position-absolute" aria-hidden="true"></i>
+                                      </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      href="javascript:void(0);"
+                                      class="d-inline-flex circle align-items-center justify-content-center snackbar-wishlist"
+                                      ><i class="fa fa-heart position-absolute"></i
+                                    ></a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      href="javascript:void(0);"
+                                      class="d-inline-flex circle align-items-center justify-content-center snackbar-addcart"
+                                      ><i class="fa fa-shopping-basket position-absolute"></i
+                                    ></a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-footer b-0 p-0 pt-2 bg-white d-flex align-items-start justify-content-between">
+                            <div class="text-left">
+                              <div class="text-left">
+                                <div class="star-rating align-items-center d-flex justify-content-left mb-1 p-0">
+                                  <i class="fas fa-star filled"></i>
+                                  <i class="fas fa-star filled"></i>
+                                  <i class="fas fa-star filled"></i>
+                                  <i class="fas fa-star filled"></i>
+                                  <i class="fas fa-star"></i>
+                                  <span class="small">(5 Reviews)</span>
+                                </div>
+                                <h5 class="fs-md mb-0 lh-1 mb-1">
+                                  <a href="{{ product.url }}">{{ product.title }}</a>
+                                </h5>
+                                <div class="elis_rty">
+                                  <span class="ft-bold text-dark fs-sm">{{ product.price | money }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% else %}
+                      {% for i in (1..4) %}
+                        {% capture current %}
+                            {% cycle 1, 2, 3, 4 %}
+                        {% endcapture %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                          <div class="product_grid card b-0">
+                            <div class="badge bg-info text-white position-absolute ft-regular ab-left text-upper">
+                              Sale
+                            </div>
+                            <div class="card-body p-0">
+                              <div class="shop_thumb position-relative">
+                                <a class="card-img-top d-block overflow-hidden" href="#">
+                                  {% comment %} <img class="card-img-top" src="" alt="..."> {% endcomment %}
+                                  {{
+                                    'product-'
+                                    | append:current
+                                    | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small'
+                                  }}
+                                </a>
+                                <div class="product-left-hover-overlay">
+                                  <ul class="left-over-buttons">
+                                    <li>
+                                      <a
+                                        href="javascript:void(0);"
+                                        class="d-inline-flex circle align-items-center justify-content-center"
+                                        ><i class="fas fa-expand-arrows-alt position-absolute"></i
+                                      ></a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        href="javascript:void(0);"
+                                        class="d-inline-flex circle align-items-center justify-content-center snackbar-wishlist"
+                                        ><i class="far fa-heart position-absolute"></i
+                                      ></a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        href="javascript:void(0);"
+                                        class="d-inline-flex circle align-items-center justify-content-center snackbar-addcart"
+                                        ><i class="fas fa-shopping-basket position-absolute"></i
+                                      ></a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-footer b-0 p-0 pt-2 bg-white d-flex align-items-start justify-content-between">
+                              <div class="text-left">
+                                <div class="text-left">
+                                  <div class="star-rating align-items-center d-flex justify-content-left mb-1 p-0">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="small">(5 Reviews)</span>
+                                  </div>
+                                  <h5 class="fs-md mb-0 lh-1 mb-1">
+                                    <a href="#">Title Here </a>
+                                  </h5>
+                                  <div class="elis_rty">
+                                    <span class="ft-bold text-dark fs-sm">$45.00</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category List",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "CategoryList",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category List"
+    }
+  ]
+}
+{% endschema %}

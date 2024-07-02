@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify:\/\/collections\/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_overlay_opacity": 40,
+        "image_height": "large",
+        "desktop_content_position": "bottom-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "category_list_qfckdn": {
+      "type": "category-list",
+      "blocks": {
+        "category_list_kiPDGH": {
+          "type": "CategoryList",
+          "settings": {
+            "title": "",
+            "collection": "best-selling"
+          }
+        },
+        "category_list_FyrJt7": {
+          "type": "CategoryList",
+          "settings": {
+            "title": "",
+            "collection": "best-selling"
+          }
+        }
+      },
+      "block_order": [
+        "category_list_kiPDGH",
+        "category_list_FyrJt7"
+      ],
+      "settings": {}
+    },
+    "trendy_product_wbQE4c": {
+      "type": "trendy-product",
+      "settings": {
+        "collection": "best-selling"
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "category_list_qfckdn",
+    "trendy_product_wbQE4c"
+  ]
+}
